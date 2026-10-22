@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  genre: MyString
+  language: MyString
+  duration: 1
+  release_date: 2026-10-22
+
+two:
+  title: MyString
+  genre: MyString
+  language: MyString
+  duration: 1
+  release_date: 2026-10-22

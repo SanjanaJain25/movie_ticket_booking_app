@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  booking: one
+  show: one
+  seat: one
+  ticket_price: 9.99
+
+two:
+  booking: two
+  show: two
+  seat: two
+  ticket_price: 9.99
