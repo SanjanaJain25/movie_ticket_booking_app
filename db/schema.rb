@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_22_070630) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
   create_table "booking_seats", force: :cascade do |t|
     t.integer "booking_id", null: false
     t.integer "show_id", null: false
@@ -32,11 +32,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_22_070630) do
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
+  create_table "cinema_reviews", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "cinema_id", null: false
+    t.integer "rating"
+    t.text "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cinema_id"], name: "index_cinema_reviews_on_cinema_id"
+    t.index ["user_id"], name: "index_cinema_reviews_on_user_id"
+  end
+
   create_table "cinemas", force: :cascade do |t|
     t.string "name"
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "movie_reviews", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "movie_id", null: false
+    t.integer "rating"
+    t.text "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_movie_reviews_on_movie_id"
+    t.index ["user_id"], name: "index_movie_reviews_on_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -94,12 +116,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_22_070630) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role"
   end
 
   add_foreign_key "booking_seats", "bookings"
   add_foreign_key "booking_seats", "seats"
   add_foreign_key "booking_seats", "shows"
   add_foreign_key "bookings", "users"
+  add_foreign_key "cinema_reviews", "cinemas"
+  add_foreign_key "cinema_reviews", "users"
+  add_foreign_key "movie_reviews", "movies"
+  add_foreign_key "movie_reviews", "users"
   add_foreign_key "screens", "cinemas"
   add_foreign_key "seat_reservations", "bookings"
   add_foreign_key "seat_reservations", "seats"
