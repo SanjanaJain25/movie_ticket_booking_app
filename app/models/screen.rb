@@ -1,4 +1,6 @@
 class Screen < ApplicationRecord
+    include AdminCreatedRecord
+
   belongs_to :cinema
 
   has_many :seats, dependent: :restrict_with_error

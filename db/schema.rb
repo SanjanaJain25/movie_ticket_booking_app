@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_25_105420) do
   create_table "booking_seats", force: :cascade do |t|
     t.integer "booking_id", null: false
     t.integer "show_id", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.decimal "ticket_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["booking_id", "show_id", "seat_id"], name: "index_booking_seats_on_booking_id_and_show_id_and_seat_id", unique: true
     t.index ["booking_id"], name: "index_booking_seats_on_booking_id"
     t.index ["seat_id"], name: "index_booking_seats_on_seat_id"
     t.index ["show_id"], name: "index_booking_seats_on_show_id"
@@ -48,6 +49,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_cinemas_on_created_by_id"
   end
 
   create_table "movie_reviews", force: :cascade do |t|
@@ -69,6 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.date "release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id", null: false
   end
 
   create_table "screens", force: :cascade do |t|
@@ -76,7 +80,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id", null: false
     t.index ["cinema_id"], name: "index_screens_on_cinema_id"
+    t.index ["created_by_id"], name: "index_screens_on_created_by_id"
   end
 
   create_table "seat_reservations", force: :cascade do |t|
@@ -87,6 +93,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.datetime "updated_at", null: false
     t.index ["booking_id"], name: "index_seat_reservations_on_booking_id"
     t.index ["seat_id"], name: "index_seat_reservations_on_seat_id"
+    t.index ["show_id", "seat_id"], name: "index_seat_reservations_on_show_id_and_seat_id", unique: true
     t.index ["show_id"], name: "index_seat_reservations_on_show_id"
   end
 
@@ -96,6 +103,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.integer "seat_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_seats_on_created_by_id"
     t.index ["screen_id"], name: "index_seats_on_screen_id"
   end
 
@@ -107,6 +116,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.decimal "ticket_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_shows_on_created_by_id"
     t.index ["movie_id"], name: "index_shows_on_movie_id"
     t.index ["screen_id"], name: "index_shows_on_screen_id"
   end
@@ -117,6 +128,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role"
+    t.string "password_digest"
   end
 
   add_foreign_key "booking_seats", "bookings"
@@ -125,13 +137,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_112027) do
   add_foreign_key "bookings", "users"
   add_foreign_key "cinema_reviews", "cinemas"
   add_foreign_key "cinema_reviews", "users"
+  add_foreign_key "cinemas", "users", column: "created_by_id"
   add_foreign_key "movie_reviews", "movies"
   add_foreign_key "movie_reviews", "users"
   add_foreign_key "screens", "cinemas"
+  add_foreign_key "screens", "users", column: "created_by_id"
   add_foreign_key "seat_reservations", "bookings"
   add_foreign_key "seat_reservations", "seats"
   add_foreign_key "seat_reservations", "shows"
   add_foreign_key "seats", "screens"
+  add_foreign_key "seats", "users", column: "created_by_id"
   add_foreign_key "shows", "movies"
   add_foreign_key "shows", "screens"
+  add_foreign_key "shows", "users", column: "created_by_id"
 end

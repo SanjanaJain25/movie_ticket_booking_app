@@ -1,4 +1,6 @@
 class Seat < ApplicationRecord
+    include AdminCreatedRecord
+
   belongs_to :screen
   has_many :booking_seats, dependent: :restrict_with_error
   has_many :seat_reservations, dependent: :restrict_with_error
