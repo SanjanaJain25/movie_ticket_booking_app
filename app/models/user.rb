@@ -42,7 +42,4 @@ def booking_history
     bookings
   end
 end
-
-
-
 end
