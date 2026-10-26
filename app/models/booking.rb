@@ -84,12 +84,5 @@ def self.book_seats!(user:, show:, seat_ids:)
     booking
   end
 end
-
-
-
-
-
-
-
 end
 

@@ -73,6 +73,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_105420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_movies_on_created_by_id"
   end
 
   create_table "screens", force: :cascade do |t|
@@ -140,6 +141,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_105420) do
   add_foreign_key "cinemas", "users", column: "created_by_id"
   add_foreign_key "movie_reviews", "movies"
   add_foreign_key "movie_reviews", "users"
+  add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "screens", "cinemas"
   add_foreign_key "screens", "users", column: "created_by_id"
   add_foreign_key "seat_reservations", "bookings"

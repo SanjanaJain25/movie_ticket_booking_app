@@ -16,7 +16,6 @@ class MovieCatalog
     movies
   end
 
-  
 def list_shows(movie_id: nil)
   shows = Show.includes(:movie, screen: :cinema)
   shows = shows.where(movie_id: movie_id) if movie_id.present?

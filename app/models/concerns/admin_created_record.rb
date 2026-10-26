@@ -16,6 +16,22 @@ module AdminCreatedRecord
     user&.admin? || false
   end
 
+  def update_by!(user, attributes)
+    unless editable_by?(user)
+      raise StandardError, "Only admins can update this record"
+    end
+
+    update!(attributes)
+  end
+
+  def delete_by!(user)
+    unless deletable_by?(user)
+      raise StandardError, "Only admins can delete this record"
+    end
+
+    destroy!
+  end
+
   private
 
   def creator_must_be_admin

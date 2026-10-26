@@ -1,6 +1,4 @@
-# ==========================================
 # Movie Ticket Booking System - Seed Data
-# ==========================================
 
 puts "Seeding Movie Ticket Booking System..."
 
@@ -86,10 +84,6 @@ screen.save!
   end
 end
 
-# 7. Future shows
-# These are demonstration schedules and prices,
-# not verified live PVR show listings.
-base_time = Time.current.beginning_of_day + 1.day + 10.hours
 
 show_times = [
   { offset: 0.hours, price: 250 },
