@@ -6,30 +6,8 @@ module AdminCreatedRecord
     belongs_to :created_by, class_name: "User"
 
     validate :creator_must_be_admin, on: :create
-  end
-
-  def editable_by?(user)
-    user&.admin? || false
-  end
-
-  def deletable_by?(user)
-    user&.admin? || false
-  end
-
-  def update_by!(user, attributes)
-    unless editable_by?(user)
-      raise StandardError, "Only admins can update this record"
-    end
-
-    update!(attributes)
-  end
-
-  def delete_by!(user)
-    unless deletable_by?(user)
-      raise StandardError, "Only admins can delete this record"
-    end
-
-    destroy!
+    before_update :check_admin_for_update
+    before_destroy :check_admin_for_destroy
   end
 
   private
@@ -37,6 +15,20 @@ module AdminCreatedRecord
   def creator_must_be_admin
     unless created_by&.admin?
       errors.add(:created_by, "must be an admin")
+    end
+  end
+
+  def check_admin_for_update
+    unless Current.user&.admin?
+      errors.add(:base, "Only admins can update this record")
+      throw(:abort)
+    end
+  end
+
+  def check_admin_for_destroy
+    unless Current.user&.admin?
+      errors.add(:base, "Only admins can delete this record")
+      throw(:abort)
     end
   end
 end
